@@ -1,0 +1,4 @@
+# Cloudflare Pages — single page application fallback and locale paths
+/en/*   /         200
+/ar/*   /         200
+/*      /index.html  200
