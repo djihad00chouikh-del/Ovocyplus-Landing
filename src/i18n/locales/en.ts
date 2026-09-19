@@ -78,12 +78,16 @@ nav: {
     },
   },
   showcase: {
-    kicker: 'In 3D',
-    title: 'The pack, in three dimensions.',
+    kicker: 'Gallery',
+    title: 'The product, from every angle.',
     description:
-      'A stylized view of the pack you can turn freely — together with the product film, played without sound.',
-    dragHint: 'Turn the pack',
-    stylizedNote: 'Stylized representation',
+      'A dynamic gallery of the pack — together with the product film, played without sound.',
+    galleryLabel: 'Product photos',
+    slides: [
+      'Ovocyplus® pack, view 1',
+      'Ovocyplus® pack, view 2',
+      'Ovocyplus® pack with capsules',
+    ],
     videoLabel: 'Ovocyplus® presentation film',
     videoFallbackAlt: 'Still image from the product film',
   },

@@ -64,8 +64,8 @@ export interface Messages {
     kicker: string
     title: string
     description: string
-    dragHint: string
-    stylizedNote: string
+    galleryLabel: string
+    slides: readonly string[]
     videoLabel: string
     videoFallbackAlt: string
   }

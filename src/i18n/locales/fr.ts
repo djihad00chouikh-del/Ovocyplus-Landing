@@ -78,12 +78,16 @@ nav: {
     },
   },
   showcase: {
-    kicker: 'En 3D',
-    title: 'La boîte, en trois dimensions.',
+    kicker: 'Galerie',
+    title: 'Le produit, sous tous les angles.',
     description:
-      'Un aperçu stylisé du pack, librement manipulable — accompagné du film produit, diffusé sans son.',
-    dragHint: 'Faites pivoter',
-    stylizedNote: 'Représentation stylisée',
+      'Une galerie dynamique du pack — accompagnée du film produit, diffusé sans son.',
+    galleryLabel: 'Photos du produit',
+    slides: [
+      'Pack Ovocyplus®, vue 1',
+      'Pack Ovocyplus®, vue 2',
+      'Pack Ovocyplus® avec capsules',
+    ],
     videoLabel: 'Vidéo de présentation Ovocyplus®',
     videoFallbackAlt: 'Image fixe du film produit',
   },

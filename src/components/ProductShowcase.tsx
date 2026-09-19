@@ -1,20 +1,34 @@
-import { MousePointer2 } from 'lucide-react'
+import { useEffect, useState } from 'react'
 
 import ovocyplusCommercial from '../assets/product/ovocyplus-commercial.mp4'
+import ovocyplusFrame1 from '../assets/product/ovocyplus-frame-1.webp'
 import ovocyplusFrame2 from '../assets/product/ovocyplus-frame-2.webp'
+import ovocyplusPack from '../assets/product/ovocyplus-pack-500.jpg'
 import { useInView } from '../hooks/useInView'
 import { useReducedMotion } from '../hooks/useReducedMotion'
 import { useI18n } from '../i18n/context'
 import { cn } from '../lib/cn'
 import { Section } from './layout/Section'
-import { ProductViewer3D } from './viewer/ProductViewer3D'
+
+const galleryImages = [ovocyplusFrame1, ovocyplusFrame2, ovocyplusPack]
 
 export function ProductShowcase() {
   const { messages } = useI18n()
   const t = messages.showcase
   const reduced = useReducedMotion()
-  const { ref, inView } = useInView<HTMLDivElement>({ rootMargin: '0px 0px 300px 0px' })
-  const playVideo = inView && !reduced
+  const { ref: galleryRef, inView: galleryInView } = useInView<HTMLDivElement>()
+  const { ref: videoRef, inView: videoInView } = useInView<HTMLDivElement>()
+  const playVideo = videoInView && !reduced
+
+  const [active, setActive] = useState(0)
+
+  useEffect(() => {
+    if (!galleryInView || reduced) return
+    const id = window.setInterval(() => {
+      setActive((current) => (current + 1) % galleryImages.length)
+    }, 4000)
+    return () => window.clearInterval(id)
+  }, [galleryInView, reduced])
 
   return (
     <Section
@@ -25,20 +39,46 @@ export function ProductShowcase() {
       description={t.description}
     >
       <div className="grid gap-6 lg:grid-cols-5">
-        <div className="overflow-hidden rounded-3xl bg-beige p-4 sm:p-6 lg:col-span-3">
-          <ProductViewer3D />
-          <div className="mt-2 flex items-center justify-between gap-3 px-2 pb-1 sm:flex-row flex-col sm:items-center">
-            <span className="flex items-center gap-2 text-sm text-ink-soft">
-              <MousePointer2 size={16} aria-hidden="true" />
-              {t.dragHint}
-            </span>
-            <span className="text-xs text-ink-soft">{t.stylizedNote}</span>
+        <div className="overflow-hidden rounded-3xl bg-beige p-3 sm:p-4 lg:col-span-3">
+          <div
+            ref={galleryRef}
+            role="group"
+            aria-roledescription="carousel"
+            aria-label={t.galleryLabel}
+            className="relative aspect-[4/5] overflow-hidden rounded-2xl"
+          >
+            {galleryImages.map((src, i) => (
+              <img
+                key={src}
+                src={src}
+                alt={t.slides[i]}
+                className={cn(
+                  'absolute inset-0 size-full object-cover transition-opacity duration-700',
+                  i === active ? 'opacity-100' : 'opacity-0',
+                )}
+              />
+            ))}
+          </div>
+          <div className="mt-3 flex items-center justify-center gap-2 pb-1">
+            {galleryImages.map((src, i) => (
+              <button
+                key={src}
+                type="button"
+                onClick={() => setActive(i)}
+                aria-label={`${t.galleryLabel} — ${i + 1}/${galleryImages.length}`}
+                aria-current={i === active ? 'true' : undefined}
+                className={cn(
+                  'h-2.5 rounded-full transition-all duration-300',
+                  i === active ? 'w-6 bg-ink' : 'w-2.5 bg-ink/30 hover:bg-ink/50',
+                )}
+              />
+            ))}
           </div>
         </div>
 
         <div className="lg:col-span-2">
           <div
-            ref={ref}
+            ref={videoRef}
             className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-beige"
           >
             <img
